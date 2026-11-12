@@ -1,0 +1,62 @@
+<Project>
+  <!-- SDK-style project with explicit SDK imports, so that the VSSDK targets can be imported after
+       Sdk.targets. Microsoft.VSSDK.BuildTools only sets VSToolsPath; without the explicit import at the
+       bottom no .pkgdef or .vsix is produced. -->
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>SolutionAlias</RootNamespace>
+    <AssemblyName>SolutionAlias</AssemblyName>
+    <Version>1.0.0</Version>
+    <Company>WilloAndCo</Company>
+    <Product>Solution Alias</Product>
+    <!-- Keeps the private repo's commit hash out of the published DLL's product version. -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <!-- Release only: records the .pdb and source paths as /_/... instead of the local folders. -->
+    <PathMap Condition="'$(Configuration)' == 'Release'">$(MSBuildProjectDirectory)=/_/</PathMap>
+
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <UseCodebase>true</UseCodebase>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Community.VisualStudio.Toolkit.17" Version="17.0.551" ExcludeAssets="Runtime" />
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2142" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- ColorDialog for "Custom..." colours, and the JSON serialiser for the alias file. -->
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The unit tests (Tests\) test internal classes. -->
+    <InternalsVisibleTo Include="SolutionAlias.UnitTests" />
+    <InternalsVisibleTo Include="SolutionAlias.IntegrationTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="source.extension.vsixmanifest" SubType="Designer" />
+    <None Remove="VSCommandTable.vsct" />
+    <VSCTCompile Include="VSCommandTable.vsct" ResourceName="Menus.ctmenu" />
+    <Content Include="Resources\Icon.png" IncludeInVSIX="true" />
+    <Content Include="Resources\Preview.png" IncludeInVSIX="true" />
+    <!-- The licence is at the repo root; Link puts it in the VSIX's Resources folder, where the manifest's <License> points.
+         The build ignores Link's file name, so the file itself must be called LICENSE.txt. -->
+    <Content Include="..\LICENSE.txt" Link="Resources\LICENSE.txt" IncludeInVSIX="true" />
+  </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
+</Project>

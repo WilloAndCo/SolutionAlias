@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <!-- Keep in sync with Vsix.cs. -->
+  <Metadata>
+    <!-- Don't Identity change after release -->
+    <Identity Id="WilloAndCo.SolutionAlias" Version="1.0.0" Language="en-US" Publisher="WilloAndCo" />
+    <!-- Marketplace info -->
+    <DisplayName>Solution Alias</DisplayName>
+    <Description xml:space="preserve">Shows a coloured label next to the solution name in the title bar: the solution file's path, or an alias in colours you choose.</Description>
+    <License>Resources\LICENSE.txt</License>
+    <Icon>Resources\Icon.png</Icon>
+    <PreviewImage>Resources\Preview.png</PreviewImage>
+    <Tags>solution; title bar; alias; label; colour; color; branch</Tags>
+  </Metadata>
+  <Installation>
+    <!-- Minimum is VS 2022 17.14.0 (build 17.14.36109.1), the oldest version tested. Microsoft's schema says
+         to keep the minor version at 0 and put the build number after it, so 17.14.36109.1 is written 17.0.36109.1. -->
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0.36109.1,19.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" Version="[4.8,)" d:Source="Manual" />
+  </Dependencies>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" DisplayName="Visual Studio core editor" Version="[17.0,19.0)" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" d:Source="Project" d:ProjectName="%CurrentProject%" />
+  </Assets>
+</PackageManifest>

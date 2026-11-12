@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Integration tests: each test starts Visual Studio 2022 and/or 2026 using a separate "IntegrationTests" settings
+       folder with Solution Alias and its inspector deployed, drives it through DTE (Visual Studio's automation API)
+       and checks what the title bar shows. The UI tests (UI\) also work Visual Studio with the real mouse and Windows
+       UI Automation. They need both Visual Studio versions installed, and open Visual Studio windows while they run.
+       In Test Explorer they are grouped under the trait Category = Integration, and the UI tests under Category = UI. -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" PrivateAssets="all" />
+    <!-- DTE: Visual Studio's automation API. Same version as the extension builds against. -->
+    <PackageReference Include="EnvDTE" Version="17.0.31902.203" />
+    <PackageReference Include="EnvDTE80" Version="17.0.31902.203" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Windows UI Automation (part of .NET Framework), to find and work Visual Studio's windows, buttons and menus. -->
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The extension, for the values the tests expect -->
+    <ProjectReference Include="..\..\SolutionAlias\SolutionAlias.csproj" />
+  </ItemGroup>
+
+</Project>

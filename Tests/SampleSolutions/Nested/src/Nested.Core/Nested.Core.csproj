@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Sample solution for the extensions: inside solution folders Layer1\Layer2, with deep project folders and a file
+       linked into this project and Nested.Other. Not part of either extension's solution. -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\Linked.cs" Link="Shared\Linked.cs" />
+  </ItemGroup>
+
+</Project>

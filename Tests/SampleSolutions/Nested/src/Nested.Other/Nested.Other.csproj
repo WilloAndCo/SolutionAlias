@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Sample solution for the extensions: inside solution folder Other, sharing Linked.cs with Nested.Core. -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\Linked.cs" Link="Shared\Linked.cs" />
+  </ItemGroup>
+
+</Project>

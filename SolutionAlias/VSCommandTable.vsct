@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- Keep the symbols in sync with VSCommandTable.cs. -->
+	<Extern href="stdidcmd.h" />
+	<Extern href="vsshlids.h" />
+	<Include href="KnownImageIds.vsct" />
+
+	<!-- Guids are unique values created by the OS. New guids can be created from Tools > Create GUID. Names are chosed by the project and can be renamed as needed -->
+	<!-- GuidSymbol are names for guids, IDSymbol are a name for a number inside a specific guid -->
+
+	<!-- <Commands> holds menu groups and buttons. A button stores its GUID and ID, icon, display text, and the group it shows in. A group stores its GUID and ID, its position (priority), and the VS menu it shows in -->
+
+	<Commands package="guidSolutionAliasPackage">
+		<Groups>
+			<!-- The context menu of the Solution node in Solution Explorer. -->
+			<Group guid="guidSolutionAliasCmdSet" id="SolutionNodeMenuGroup" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_SOLNNODE" />
+			</Group>
+		</Groups>
+
+		<Buttons>
+			<Button guid="guidSolutionAliasCmdSet" id="SetSolutionAliasCommand" priority="0x0100" type="Button">
+				<Parent guid="guidSolutionAliasCmdSet" id="SolutionNodeMenuGroup" />
+				<Icon guid="ImageCatalogGuid" id="Tag" />
+				<CommandFlag>IconIsMoniker</CommandFlag>
+				<Strings>
+					<ButtonText>Set Solution &amp;Alias...</ButtonText>
+				</Strings>
+			</Button>
+		</Buttons>
+	</Commands>
+
+	<Symbols>
+		<GuidSymbol name="guidSolutionAliasPackage" value="{92ecd625-e983-4f00-931a-d837d43401dc}" />
+
+		<GuidSymbol name="guidSolutionAliasCmdSet" value="{9471764c-1d13-48ea-84a1-d2a40c18f1c6}">
+			<!--- 0x1020 is an arbitrary default value used in VS templates for groups. Different groups need different ids -->
+			<IDSymbol name="SolutionNodeMenuGroup" value="0x1020" />
+			<!--- 0x0100 is an arbitrary default value used in VS templates for commands. Different commands need different ids -->
+			<IDSymbol name="SetSolutionAliasCommand" value="0x0100" />
+		</GuidSymbol>
+	</Symbols>
+</CommandTable>

@@ -1,0 +1,37 @@
+<Project>
+	<!-- Test-only extension for the integration tests. It lets the tests read what DTE can't see.  It is never published, and it is only deployed into the integration
+       tests' own IntegrationTests settings folder (see DeployExtension below). -->
+	<Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>12.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<RootNamespace>SolutionAlias.VisualStudioInspector</RootNamespace>
+		<AssemblyName>SolutionAlias.VisualStudioInspector</AssemblyName>
+
+		<GeneratePkgDefFile>true</GeneratePkgDefFile>
+		<UseCodebase>true</UseCodebase>
+		<IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+		<IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+		<IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
+		<CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+		<CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+
+		<!-- Deployed only when the integration tests build it for their "IntegrationTests" settings folder -->
+		<DeployExtension Condition="'$(VSSDKTargetPlatformRegRootSuffix)' != 'IntegrationTests'">false</DeployExtension>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.31902.203" ExcludeAssets="Runtime" />
+		<PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2142" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="source.extension.vsixmanifest" SubType="Designer" />
+	</ItemGroup>
+
+	<Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+	<Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
+</Project>
